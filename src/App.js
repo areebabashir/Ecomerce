@@ -10,6 +10,9 @@ import "react-toastify/dist/ReactToastify.css"
 import Login from "./pages/Auth/Login";
 import Dashboard from "./pages/user/Dashboard";
 import PrivateRoute from "./component/Routes/Private";
+import AdminRoute from "./component/Routes/AdminRoute";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
+import AdminDashboard from "./pages/Admin/AdminDashboard2"
 
 
 
@@ -18,11 +21,25 @@ function App() {
     <><BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+
+
+
         <Route path="/dashboard" element={<PrivateRoute />}>
-          <Route path="" element={<Dashboard />} />
+          <Route path="user" element={<Dashboard />} />
         </Route>
+
+        <Route path="/dashboard" element={<AdminRoute />}>
+          <Route path="admin" element={<AdminDashboard />} />
+        </Route>
+
+
+
+
+
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/ForgetPassword" element={<ForgotPassword />} />
+
 
 
         <Route path="/about" element={<About />} />
