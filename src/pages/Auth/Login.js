@@ -8,7 +8,7 @@ import { useAuth } from "../../context/auth";
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [auth, setAuth] = useAuth();
+    const [authData, setAuthData] = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -20,15 +20,16 @@ const Login = () => {
                 email,
                 password,
             });
+            console.log(res);
             if (res && res.data.success) {
-                toast.success(res.data && res.data.message);
-                setAuth({
-                    ...auth,
-                    user: res.data.user,
-                    token: res.data.token,
-                });
-                localStorage.setItem("auth", JSON.stringify(res.data));
-                navigate(location.state || "/");
+                setAuthData(res.data.user);
+                localStorage.setItem("auth", res.data.token);
+                if(res.data.user.role === 1){
+                    window.location.href = "/admin-panel";
+                }else{
+                    window.location.href = "/user-panel";
+                }
+                
             } else {
                 toast.error(res.data.message);
             }

@@ -2,9 +2,12 @@ import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import toast from "react-hot-toast";
-
+import { verifyToken } from "../../pages/Auth/verifyToken";
 const Header = () => {
   const [auth, setAuth] = useAuth();
+
+  const { valid, role, name } = verifyToken();
+
   const handleLogout = () => {
     setAuth({
       ...auth,
@@ -12,7 +15,7 @@ const Header = () => {
       token: "",
     });
     localStorage.removeItem("auth");
-    toast.success("Logout Successfully");
+    window.location.href = "/login"
   };
   return (
     <>
@@ -44,17 +47,17 @@ const Header = () => {
                   Category
                 </NavLink>
               </li>
-              {!auth?.user ? (
+              {!valid ? (
                 <>
                   <li className="nav-item">
-                    <NavLink to="/register" className="nav-link">
+                    <Link to="/register" className="nav-link">
                       Register
-                    </NavLink>
+                    </Link>
                   </li>
                   <li className="nav-item">
-                    <NavLink to="/login" className="nav-link">
+                    <Link to="/login" className="nav-link">
                       Login
-                    </NavLink>
+                    </Link>
                   </li>
                 </>
               ) : (
@@ -67,15 +70,15 @@ const Header = () => {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      {auth?.user?.name}
+                      {valid ? name : ""}
                     </NavLink>
                     <ul className="dropdown-menu">
                       <li>
-                        <NavLink to={`/dashboard/${auth?.user?.role === 1 ? 'admin' : 'user'}`} className="dropdown-item">
+                        <Link to={role === 1 ? "/admin-panel" : "/user-panel"} className="dropdown-item">
                           Dashboard
-                        </NavLink>
+                        </Link>
                       </li>
-                      <li>
+                      {valid && <li>
                         <NavLink
                           onClick={handleLogout}
                           to="/login"
@@ -83,7 +86,8 @@ const Header = () => {
                         >
                           Logout
                         </NavLink>
-                      </li>
+                      </li>}
+
                     </ul>
                   </li>
                 </>

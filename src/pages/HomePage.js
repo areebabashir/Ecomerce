@@ -1,14 +1,14 @@
 import React from 'react'
 import Layout from "../component/Layout/Layout"
-import { useAuth } from "../context/auth";
-
+import { verifyToken } from './Auth/verifyToken';
 
 const HomePage = () => {
-    const [auth, setAuth] = useAuth();
+    const {valid, name, email} = verifyToken()
     return (
       <Layout title={"Best offers "}>
         <h1>HomePage</h1>
-        <pre>{JSON.stringify(auth, null, 4)}</pre>
+        <pre>{valid ? name : ""}</pre>
+        <pre>{valid ? email : ""}</pre>
       </Layout>
     );
   };
