@@ -43,12 +43,12 @@ const CreateCategory = () => {
     // };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget);
+        console.log(name);
 
         try {
             const { data } = await axios.post(
-                "/api/v1/category/create-category",
-                formData,
+                "/api/v1/category/create-category", {name}
+                ,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -58,7 +58,8 @@ const CreateCategory = () => {
             );
 
             if (data?.success) {
-                toast.success(`${formData.get('name')} is created`);
+                console.log(`${name} is created`);
+                toast.success(`${name} is created`);
                 getAllCategory();
             } else {
                 toast.error(data.message);
@@ -73,9 +74,10 @@ const CreateCategory = () => {
     //get all categories
     const getAllCategory = async () => {
         try {
-            const { data } = await axios.get("/api/v1/category/get-category");
+            const { data } = await axios.get("/api/v1/category/get-categories");
+            
             if (data.success) {
-                setCategories(data.category);
+                setCategories(data.categories);
             }
         } catch (error) {
             console.log(error);
@@ -93,7 +95,13 @@ const CreateCategory = () => {
         try {
             const { data } = await axios.put(
                 `/api/v1/category/update-category/${selected._id}`,
-                { name: updatedName }
+                { name: updatedName },
+                {
+                headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                },
+            }
             );
             if (data.success) {
                 toast.success(`${updatedName} is updated`);
@@ -113,7 +121,12 @@ const CreateCategory = () => {
     const handleDelete = async (pId) => {
         try {
             const { data } = await axios.delete(
-                `/api/v1/category/delete-category/${pId}`
+                `/api/v1/category/delete-category/${pId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
             );
             if (data.success) {
                 toast.success(`Category is deleted`);

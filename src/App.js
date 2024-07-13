@@ -30,7 +30,6 @@ function App() {
           <Route path="/create-category" element={<CreateCategory />} />
           <Route path="/create-product" element={<CreateProduct />} />
 
-
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/policy" element={<Policy />} />

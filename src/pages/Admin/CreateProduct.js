@@ -24,9 +24,9 @@ const CreateProduct = () => {
   //get all category
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get("/api/v1/category/get-categories");
       if (data?.success) {
-        setCategories(data?.category);
+        setCategories(data?.categories);
       }
     } catch (error) {
       console.log(error);
@@ -47,29 +47,34 @@ const CreateProduct = () => {
       productData.append("description", description);
       productData.append("price", price);
       productData.append("quantity", quantity);
-      productData.append("photo", photo);
       productData.append("category", category);
-      const { data } = axios.post(
-        "/api/v1/product/create-product",
-        productData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/form-data',
-        },
+      productData.append("shipping", shipping);
+      if (photo) {
+        productData.append("photo", photo);
       }
+  
+      const { data } = await axios.post(
+        "/api/v1/product/create-product",
+        productData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       );
+  
       if (data?.success) {
-        toast.error(data?.message);
-      } else {
         toast.success("Product Created Successfully");
         navigate("/dashboard/admin/products");
+      } else {
+        toast.error(data?.message || "Failed to create product");
       }
     } catch (error) {
-      console.log(error);
-      toast.error("something went wrong");
+      console.error("Error creating product:", error);
+      toast.error(error.response?.data?.message || "Something went wrong");
     }
   };
-
   return (
     <Layout title={"Dashboard - Create Product"}>
       <div className="container-fluid m-3 p-3">
