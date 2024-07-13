@@ -5,6 +5,7 @@ import AdminMenu from "./../../components/Layout/AdminMenu";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Select } from "antd";
+import { verifyToken } from "../Auth/verifyToken.js"
 import { useNavigate } from "react-router-dom";
 const { Option } = Select;
 
@@ -18,6 +19,7 @@ const CreateProduct = () => {
   const [quantity, setQuantity] = useState("");
   const [shipping, setShipping] = useState("");
   const [photo, setPhoto] = useState("");
+  const { token } = verifyToken()
 
   //get all category
   const getAllCategory = async () => {
@@ -49,7 +51,12 @@ const CreateProduct = () => {
       productData.append("category", category);
       const { data } = axios.post(
         "/api/v1/product/create-product",
-        productData
+        productData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/form-data',
+        },
+      }
       );
       if (data?.success) {
         toast.error(data?.message);

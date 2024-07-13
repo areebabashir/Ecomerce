@@ -1,4 +1,4 @@
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export const verifyToken = () => {
   const token = localStorage.getItem("auth");
@@ -19,7 +19,7 @@ export const verifyToken = () => {
     const roles = decoded.role;
     const name = decoded.name;
     const email = decoded.email;
-    return { valid: true, role: roles, name, email };
+    return { valid: true, role: roles, name, email, token };
   } catch (error) {
     return { valid: false, role: 0 };
   }
