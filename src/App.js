@@ -12,6 +12,7 @@ import Dashboard from "./pages/user/Dashboard";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import AdminDashboard2 from "./pages/Admin/AdminDashboard2";
 import CreateCategory from "./pages/Admin/CreateCategory";
+import CreateProduct from "./pages/Admin/CreateProduct";
 
 function App() {
   const { valid, role } = verifyToken();
@@ -26,7 +27,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={!valid ? <Login /> : <HomePage />} />
           <Route path="/ForgetPassword" element={<ForgotPassword />} />
-          <Route path="/category" element={<CreateCategory />} />
+          <Route path="/create-category" element={<CreateCategory />} />
+          <Route path="/create-product" element={<CreateProduct />} />
+
 
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
