@@ -13,6 +13,16 @@ import ForgotPassword from "./pages/Auth/ForgotPassword";
 import AdminDashboard2 from "./pages/Admin/AdminDashboard2";
 import CreateCategory from "./pages/Admin/CreateCategory";
 import CreateProduct from "./pages/Admin/CreateProduct";
+import Product from "./pages/Admin/Product"
+import UpdateProduct from "./pages/Admin/UpdateProduct";
+import Search from "./pages/Search";
+import ProductDetails from "./pages/ProductDetails";
+import Categories from "./pages/Categories";
+import CategoryProduct from "./pages/CategoryProduct";
+import CartPage from "./pages/CartPage";
+import Orders from "./pages/user/Orders";
+import Profile from "./pages/user/Profile";
+import User from "./pages/Admin/User";
 
 function App() {
   const { valid, role } = verifyToken();
@@ -21,18 +31,29 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/admin-panel" element={valid && role === 1 ? <AdminDashboard2 /> : <Login />} />
-          <Route path="/user-panel" element={valid ? <Dashboard /> : <Login />} />
+          <Route path="/dashboard/admin" element={valid && role === 1 ? <AdminDashboard2 /> : <Login />} />
+          <Route path="/dashboard/user" element={valid ? <Dashboard /> : <Login />} />
 
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={!valid ? <Login /> : <HomePage />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/ForgetPassword" element={<ForgotPassword />} />
-          <Route path="/create-category" element={<CreateCategory />} />
-          <Route path="/create-product" element={<CreateProduct />} />
+          <Route path="/dashboard/admin/create-category" element={<CreateCategory />} />
+          <Route path="/dashboard/admin/create-product" element={<CreateProduct />} />
+          <Route path="/dashboard/admin/products" element={<Product />} />
+          <Route path="/dashboard/admin/product/:slug" element={<UpdateProduct />} />
 
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/policy" element={<Policy />} />
+          <Route path="/Search" element={<Search />} />
+          <Route path="/Product/:slug" element={<ProductDetails />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/category/:slug" element={<CategoryProduct />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="dashboard/user/orders" element={<Orders />} />
+          <Route path="/dashboard/user/profile" element={<Profile />} />
+          <Route path="/dashboard/admin/users" element={<User />} />
+
           <Route path="*" element={<Pagenotfound />} />
         </Routes>
       </BrowserRouter>

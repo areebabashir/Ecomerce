@@ -16,31 +16,7 @@ const CreateCategory = () => {
     const [updatedName, setUpdatedName] = useState("");
 
     const { token } = verifyToken()
-    //handle Form
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const formData = new FormData(e.currentTarget);
-    //     console.log(name)
-    //     try {
-    //         const { data } = await axios.post("/api/v1/category/create-category",
-    //         formData, {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`,
-    //                 'Content-Type': 'application/form-data',
-    //             },
-    //         });
-    //         if (data?.success) {
-    //             toast.success(`${name} is created`);
-    //             getAllCategory();
-    //         } else {
-    //             toast.error(data.message);
-    //         }
-    //     } catch (error) {
-    //         console.log(error);
-    //         toast.error("Something went wrong in input form");
-    //     }
 
-    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(name);
